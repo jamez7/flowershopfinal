@@ -1,0 +1,236 @@
+body {
+    font-family: sans-serif;
+}
+
+body.frontpage {
+    background-image: url("background.png");
+    background-repeat: repeat-y;
+    background-size: contain;
+    background-position: top;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#main-title {
+    margin-top: 10px;
+    font-family: "Mea Culpa", cursive;
+    font-size: 62px;
+    color: rgb(36, 36, 36);
+}
+
+input {
+    padding: 8px;
+    font-size: 16px;
+    text-indent: 5px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    width: 300px;
+    box-shadow: 0 0px 20px rgba(0, 0, 0, 0.199);
+}
+
+select {
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    box-shadow: 0 0px 20px rgba(0, 0, 0, 0.199);
+    margin-left: 12px;
+}
+
+button {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+}
+
+.search-box {
+    position: relative;
+}
+
+#search-results {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: flex-start;
+    gap: 50px;
+    padding: 20px;
+    margin-top: 25px;
+    width: 70%;
+    height: 1400px;
+    background: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.411);
+}
+
+.result-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px;
+    height: 200px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    box-shadow: 0 0px 20px rgba(0, 0, 0, 0.199);
+
+}
+
+.result-item:hover {
+    transform: scale(1.04);
+    transition: transform 0.3s ease;
+
+}
+
+.result-item img {
+    margin: 10px;
+    width: 140px;
+    height: auto; 
+}
+
+.result-item h2 {
+    font-size: 20px;
+    margin: 0px;
+}
+
+.product-color {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Widoczność produktów na stronie głównej */
+.result-visible {
+    display: flex;
+}
+
+.result-hidden {
+    display: none;
+}
+
+/* Koszyk */
+#cart-sidebar {
+    position: fixed;
+    top: 20%;
+    right: 10px;
+    width: 220px;
+    max-height: 60vh;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    padding: 12px 14px;
+    font-size: 0.9rem;
+    z-index: 900;
+}
+
+#cart-sidebar h2 {
+    font-size: 1rem;
+    margin: 0 0 14px 0;
+    text-align: center;
+}
+
+#cart-items-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#cart-items-list li {
+    margin-bottom: 6px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 4px;
+}
+
+#cart-items-list li:last-child {
+    border-bottom: none;
+}
+
+.cart-order-btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.cart-order-btn:hover {
+    background: #45a049;
+}
+
+/* Product modal */
+.modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: #ffffff;
+    padding: 16px 20px;
+    border-radius: 10px;
+    max-width: 800px;
+    width: 90%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    display: flex;
+    gap: 12px;
+}
+
+.modal-text {
+    flex: 1;
+}
+
+.modal-close {
+    float: right;
+    border: none;
+    background: transparent;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.modal-actions {
+    margin-top: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    flex-direction: column;
+}
+
+#modal-qty {
+    width: 80px;
+    padding: 6px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+#modal-image {
+    flex: 0 0 500px;
+    max-width: 500px;
+    height: 500px;
+    object-fit: contain;
+}
+
+#modal-description {
+    font-style: italic;
+    font-size: 24px;
+}
+
+
+

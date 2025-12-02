@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flower Shop</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Mea+Culpa&display=swap" rel="stylesheet">
+    <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+
+</head>
+<body class="frontpage">
+    <aside id="cart-sidebar">
+        <h2>Bukiet</h2>
+        <ul id="cart-items-list"></ul>
+        <button type="button" id="cart-order-btn" class="cart-order-btn">Zamów</button>
+    </aside>
+
+    <img src="{{ url_for('static', filename='logo.webp') }}" alt="Flower Image" width="200">
+    <h1 id="main-title">Stwórz swój idealny bukiet</h1>
+    <div class="search-box">
+        <form autocomplete="off" onsubmit="return false;">
+            <input type="text" id="search-input" name="query" placeholder="Wpisz nazwę kwiatu (np. Lilia)">
+            <select id="color-filter" name="color">
+                <option value="">Kolor (dowolny)</option>
+                <option value="red">Czerwony</option>
+                <option value="pink">Różowy</option>
+                <option value="white">Biały</option>
+                <option value="yellow">Żółty</option>
+                <option value="green">Zielony</option>
+                <option value="blue">Niebieski</option>
+                <option value="purple">Fioletowy</option>
+            </select>
+        </form>
+    </div>
+    <div id="search-results"></div>
+
+    <div id="product-modal" class="modal hidden">
+        <div class="modal-content">
+            <img id="modal-image" alt="">
+            <div class="modal-text">
+                <button id="modal-close" type="button" class="modal-close">×</button>
+                <h2 id="modal-name"></h2>
+                <p id="modal-description"></p>
+                <p id="modal-quantity"></p>
+                <div class="modal-actions">
+                    <input type="number" id="modal-qty" class="qty-input" min="1" value="1">
+                    <button type="button" id="modal-add-to-cart" class="add-to-cart-btn">Dodaj do bukietu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

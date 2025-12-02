@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual Environment
+venv/
+
+# Database file
+database.db
+
+# Instance folder (can contain sensitive info)
+instance/
