@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dokumentacja Projektu - Full Stack</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
+          Arial, sans-serif;
+        margin: 0;
+        display: flex;
+        height: 100vh;
+        color: #333;
+        background-color: #fff;
+      }
+
+      nav {
+        width: 280px;
+        background-color: #f8f9fa;
+        border-right: 1px solid #e1e4e8;
+        overflow-y: auto;
+        padding: 20px;
+        flex-shrink: 0;
+      }
+      nav h3 {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #6a737d;
+        margin-top: 25px;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+      nav a {
+        display: block;
+        text-decoration: none;
+        color: #0366d6;
+        margin-bottom: 8px;
+        font-size: 14px;
+        padding: 4px 0;
+      }
+      nav a:hover {
+        text-decoration: underline;
+      }
+
+      main {
+        flex: 1;
+        overflow-y: auto;
+      }
+
+      .content-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px 60px;
+      }
+
+      h1 {
+        border-bottom: 1px solid #eaecef;
+        padding-bottom: 10px;
+        margin-bottom: 30px;
+        font-size: 32px;
+        font-weight: 500;
+      }
+      h2 {
+        font-size: 24px;
+        margin-top: 60px;
+        margin-bottom: 20px;
+        font-weight: 500;
+        color: #24292e;
+        border-bottom: 1px solid #eaecef;
+        padding-bottom: 0.3em;
+      }
+      h3 {
+        margin-top: 40px;
+        font-size: 18px;
+        color: #24292e;
+      }
+
+      .api-card {
+        margin-bottom: 40px;
+      }
+
+      .signature-box {
+        background-color: #f6f8fa;
+        padding: 12px 16px;
+        border: 1px solid #e1e4e8;
+        border-radius: 6px;
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
+          monospace;
+        font-size: 14px;
+        color: #24292e;
+        display: flex;
+        align-items: center;
+      }
+
+      .badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-weight: bold;
+        font-size: 12px;
+        margin-right: 10px;
+        color: white;
+        min-width: 40px;
+        text-align: center;
+      }
+      .get {
+        background-color: #61affe;
+      }
+      .post {
+        background-color: #49cc90;
+      }
+      .delete {
+        background-color: #f93e3e;
+      }
+      .internal {
+        background-color: #6a737d;
+      }
+      .js-func {
+        background-color: #f0ad4e;
+      }
+      .event {
+        background-color: #5bc0de;
+      }
+
+      .description {
+        margin: 15px 0;
+        line-height: 1.6;
+        color: #586069;
+      }
+
+      .details-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        font-size: 14px;
+      }
+      .details-table th {
+        text-align: left;
+        border-bottom: 2px solid #eaecef;
+        padding: 8px;
+        color: #586069;
+        font-weight: 600;
+        width: 30%;
+      }
+      .details-table td {
+        border-bottom: 1px solid #eaecef;
+        padding: 8px;
+        color: #24292e;
+        vertical-align: top;
+      }
+
+      code {
+        background-color: rgba(27, 31, 35, 0.05);
+        padding: 0.2em 0.4em;
+        border-radius: 3px;
+        font-family: monospace;
+        font-size: 85%;
+      }
+      .type-hint {
+        color: #d73a49;
+        font-family: monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <h3>Schematy (Blueprints)</h3>
+      <a href="#main_module">main</a>
+
+      <h3>Funkcje Pomocnicze</h3>
+      <a href="#get_session_id">get_session_id</a>
+
+      <h3>Widoki (Routes)</h3>
+      <a href="#index">index (Strona Główna)</a>
+
+      <h3>Punkty Końcowe API</h3>
+      <a href="#api_get_products">GET /api/products</a>
+      <a href="#api_get_cart">GET /api/cart</a>
+      <a href="#api_add_to_cart">POST /api/cart</a>
+      <a href="#api_remove_from_cart">DELETE /api/cart/&lt;id&gt;</a>
+      <a href="#api_place_order">POST /api/orders</a>
+
+      <h3>Warstwa Logiki (Services)</h3>
+      <a href="#cart_service">CartService (Klasa)</a>
+      <a href="#srv_add_item">&nbsp;&nbsp;↳ add_item</a>
+      <a href="#srv_get_cart">&nbsp;&nbsp;↳ get_cart</a>
+      <a href="#srv_remove_item">&nbsp;&nbsp;↳ remove_item</a>
+      <a href="#srv_place_order">&nbsp;&nbsp;↳ place_order</a>
+
+      <h3>Frontend (JavaScript)</h3>
+      <a href="#js_main">main.js (Inicjalizacja)</a>
+      <a href="#js_render">&nbsp;&nbsp;↳ renderProducts</a>
+      <a href="#js_filters">&nbsp;&nbsp;↳ applyFilters</a>
+      <a href="#js_cart_load">&nbsp;&nbsp;↳ loadCartSidebar</a>
+      <a href="#js_events">&nbsp;&nbsp;↳ Event Handlers</a>
+    </nav>
+
+    <main>
+      <div class="content-container">
+        <h1>Dokumentacja Projektu</h1>
+        <p>Dokumentacja dla systemu e-commerce (Flask + JS).</p>
+
+        <h2 id="main_module">Moduł Backend: <code>main</code></h2>
+        <p>
+          Obsługuje główną logikę aplikacji, wyświetlanie produktów oraz
+          operacje API koszyka zakupowego.
+        </p>
+
+        <div id="get_session_id" class="api-card">
+          <div class="signature-box">
+            <span class="badge internal">DEF</span>
+            <span>get_session_id() &rarr; str</span>
+          </div>
+          <div class="description">
+            Pobiera identyfikator sesji obecnego użytkownika. Jeśli sesja nie
+            istnieje, generowany jest nowy UUID i zapisywany w pliku cookie
+            sesji.
+          </div>
+          <table class="details-table">
+            <tr>
+              <th>Zwraca (Returns)</th>
+              <td>
+                <span class="type-hint">str</span><br />Unikalny ciąg hex
+                identyfikujący sesję.
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div id="index" class="api-card">
+          <div class="signature-box">
+            <span class="badge get">GET</span>
+            <span>/</span>
+          </div>
+          <div class="description">
+            <strong>Funkcja Widoku: <code>index()</code></strong
+            ><br />
+            Renderuje główną stronę domową wyświetlającą listę wszystkich
+            dostępnych produktów.
+          </div>
+          <table class="details-table">
+            <tr>
+              <th>Zwraca (Returns)</th>
+              <td>
+                <span class="type-hint">text/html</span><br />Wyrenderowany
+                szablon <code>index.html</code>.
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div id="api_get_products" class="api-card">
+          <div class="signature-box">
+            <span class="badge get">GET</span>
+            <span>/api/products</span>
+          </div>
+          <div class="description">
+            <strong>Endpoint API: <code>api_get_products()</code></strong
+            ><br />
+            Pobiera pełną listę produktów z bazy danych, w tym ścieżki do
+            obrazów sformatowane dla frontendu.
+          </div>
+          <table class="details-table">
+            <tr>
+              <th>Struktura Odpowiedzi</th>
+              <td>
+                <span class="type-hint">List[Object]</span><br />Lista JSON
+                zawierająca obiekty produktów (id, name, color, quantity,
+                description, image_path).
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div id="api_get_cart" class="api-card">
+          <div class="signature-box">
+            <span class="badge get">GET</span>
+            <span>/api/cart</span>
+          </div>
+          <div class="description">
+            <strong>Endpoint API: <code>api_get_cart()</code></strong
+            ><br />
+            Pobiera aktualną zawartość koszyka użytkownika na podstawie
+            identyfikatora sesji.
+          </div>
+          <table class="details-table">
+            <tr>
+              <th>Struktura Odpowiedzi</th>
+              <td>
+                <span class="type-hint">List[Object]</span><br />Lista JSON z
+                elementami koszyka, zawierająca szczegóły produktu i ilość.
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div id="api_add_to_cart" class="api-card">
+          <div class="signature-box">
+            <span class="badge post">POST</span>
+            <span>/api/cart</span>
+          </div>
+          <div class="description">
+            <strong>Endpoint API: <code>api_add_to_cart()</code></strong
+            ><br />
+            Dodaje określony produkt do koszyka. Sprawdza dostępność zapasów
+            przed dodaniem.
+          </div>
+          <table class="details-table">
+            <tr>
+              <th>Ciało Żądania (Request Body)</th>
+              <td>
+                <code>product_id</code> <span class="type-hint">(int)</span>: ID
+                produktu do dodania.<br />
+                <code>quantity</code>
+                <span class="type-hint">(int, opcjonalnie)</span>: Ilość do
+                dodania (domyślnie: 1).
+              </td>
+            </tr>
+            <tr>
+              <th>Zwraca (Returns)</th>
+              <td>
+                <span class="type-hint">JSON</span><br />Komunikat sukcesu lub
+                błąd (400/404) w przypadku braku zapasów.
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div id="api_remove_from_cart" class="api-card">
+          <div class="signature-box">
+            <span class="badge delete">DELETE</span>
+            <span>/api/cart/&lt;int:item_id&gt;</span>
+          </div>
+          <div class="description">
+            <strong
+              >Endpoint API: <code>api_remove_from_cart(item_id)</code></strong
+            ><br />
+            Usuwa określony przedmiot z koszyka.
+          </div>
+          <table class="details-table">
+            <tr>
+              <th>Parametry</th>
+              <td>
+                <code>item_id</code> <span class="type-hint">(int)</span>:
+                Unikalne ID elementu koszyka (nie mylić z ID produktu).
+              </td>
+            </tr>
+            <tr>
+              <th>Zwraca (Returns)</th>
+              <td>
+                <span class="type-hint">JSON</span><br />Komunikat sukcesu (200)
+                lub błąd (404) jeśli element nie został znalezion.
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div id="api_place_order" class="api-card">
+          <div class="signature-box">
+            <span class="badge post">POST</span>
+            <span>/api/orders</span>
+          </div>
+          <div class="description">
+            <strong>Endpoint API: <code>api_place_order()</code></strong
+            ><br />
+            Finalizuje zamówienie. Konwertuje elementy koszyka na zamówienie i
+            odejmuje stany magazynowe w bazie danych.
+          </div>
+          <table class="details-table">
+            <tr>
+              <th>Zwraca (Returns)</th>
+              <td>
+                <span class="type-hint">JSON</span><br />Podsumowanie zamówienia
+                (201) lub błąd (400) w przypadku pustego koszyka lub braku
+                towaru.
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <h2 id="cart_service">Klasa: <code>CartService</code></h2>
+        <p>
+          Główna klasa obsługująca logikę biznesową koszyka zakupowego.
+          Zaimplementowana jako <strong>Singleton</strong>, aby zapewnić jedną
+          instancję serwisu w obrębie kontekstu aplikacji. Zarządza operacjami
+          na bazie danych (CRUD) dla tabel <code>CartItem</code> oraz
+          <code>Order</code>.
+        </p>
+
+        <div id="srv_add_item" class="api-card">
+          <div class="signature-box">
+            <span class="badge internal">METHOD</span>
+            <span>add_item(input_session_id, product_id, quantity)</span>
+          </div>
+          <div class="description">
+            Dodaje produkt do koszyka lub aktualizuje jego ilość, jeśli produkt
+            już tam jest. Przed dodaniem weryfikuje, czy w magazynie znajduje
+            się wystarczająca ilość towaru.
+          </div>
+          <table class="details-table">
+            <tr>
+              <th>Parametry</th>
+              <td>
+                <code>input_session_id</code>
+                <span class="type-hint">(str)</span>: ID sesji użytkownika.<br />
+                <code>product_id</code> <span class="type-hint">(int)</span>: ID
+                produktu.<br />
+                <code>quantity</code> <span class="type-hint">(int)</span>:
+                Ilość sztuk.
+              </td>
+            </tr>
+            <tr>
+              <th>Zwraca (Returns)</th>
+              <td>
+                <span class="type-hint">CartItem | str | None</span><br />
+                - Obiekt <code>CartItem</code> w przypadku sukcesu.<br />
+                - String <code>'insufficient_stock'</code> jeśli brak towaru.<br />
+                - <code>None</code> jeśli produkt nie istnieje.
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div id="srv_get_cart" class="api-card">
+          <div class="signature-box">
+            <span class="badge internal">METHOD</span>
+            <span>get_cart(session_id)</span>
+          </div>
+          <div class="description">
+            Pobiera wszystkie elementy koszyka przypisane do danej sesji.
+          </div>
+          <table class="details-table">
+            <tr>
+              <th>Zwraca</th>
+              <td>
+                <span class="type-hint">List[CartItem]</span> Listę obiektów z
+                bazy danych.
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div id="srv_remove_item" class="api-card">
+          <div class="signature-box">
+            <span class="badge internal">METHOD</span>
+            <span>remove_item(session_id, item_id)</span>
+          </div>
+          <div class="description">Usuwa pojedynczą pozycję z koszyka.</div>
+          <table class="details-table">
+            <tr>
+              <th>Zwraca</th>
+              <td>
+                <span class="type-hint">bool</span> <code>True</code> jeśli
+                usunięto, <code>False</code> jeśli element nie istniał.
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div id="srv_place_order" class="api-card">
+          <div class="signature-box">
+            <span class="badge internal">METHOD</span>
+            <span>place_order(session_id)</span>
+          </div>
+          <div class="description">
+            Finalizuje zamówienie w ramach <strong>transakcji atomowej</strong>.
+            <ol>
+              <li>Ponownie sprawdza stany magazynowe wszystkich produktów.</li>
+              <li>
+                Zmniejsza ilość produktów (<code>product.quantity</code>) w
+                tabeli Produktów.
+              </li>
+              <li>Tworzy rekordy w tabeli Zamówień (<code>Order</code>).</li>
+              <li>Czyści koszyk użytkownika.</li>
+            </ol>
+            W przypadku błędu (np. Race Condition) wykonuje
+            <code>rollback()</code> bazy danych.
+          </div>
+          <table class="details-table">
+            <tr>
+              <th>Zwraca (Returns)</th>
+              <td>
+                <span class="type-hint">int | str | None</span><br />
+                - <code>int</code>: Liczba zamówionych produktów (sukces).<br />
+                - <code>'insufficient_stock'</code>: Jeśli w międzyczasie
+                wyprzedano towar.<br />
+                - <code>None</code>: Błąd krytyczny bazy danych lub pusty
+                koszyk.
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <h2 id="js_main">Plik Frontend: <code>static/js/main.js</code></h2>
+        <p>
+          Główny skrypt aplikacji klienta. Uruchamia się po załadowaniu drzewa
+          DOM (<code>DOMContentLoaded</code>). Odpowiada za pobranie produktów z
+          API, renderowanie widoku, obsługę modalnego okna szczegółów oraz
+          komunikację asynchroniczną (AJAX/Fetch) z backendem.
+        </p>
+
+        <div id="js_render" class="api-card">
+          <div class="signature-box">
+            <span class="badge js-func">JS FUNC</span>
+            <span>renderProducts(products)</span>
+          </div>
+          <div class="description">
+            Generuje dynamicznie strukturę HTML dla listy produktów (karty
+            produktów) i wstawia ją do kontenera wyników. Po wygenerowaniu
+            elementów automatycznie wywołuje <code>applyFilters()</code>. Do
+            każdego elementu DOM przypisuje atrybuty <code>data-*</code> (id,
+            color, name), które są później używane przez Modal.
+          </div>
+          <table class="details-table">
+            <tr>
+              <th>Parametry</th>
+              <td>
+                <code>products</code>
+                <span class="type-hint">(Array[Object])</span>: Tablica obiektów
+                produktów pobrana z endpointu <code>/api/products</code>.
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div id="js_filters" class="api-card">
+          <div class="signature-box">
+            <span class="badge js-func">JS FUNC</span>
+            <span>applyFilters()</span>
+          </div>
+          <div class="description">
+            Odpowiada za logikę wyszukiwania i filtrowania po stronie klienta
+            (bez przeładowania strony). Iteruje po wszystkich wyrenderowanych
+            produktach i manipuluje stylem CSS <code>display</code> (flex/none).
+          </div>
+          <table class="details-table">
+            <tr>
+              <th>Logika działania</th>
+              <td>
+                1. Pobiera wartość z pola tekstowego (nazwa).<br />
+                2. Pobiera wartość z listy rozwijanej (kolor).<br />
+                3. Porównuje dane z atrybutami <code>data-name</code> i
+                <code>data-color</code> elementów HTML.
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div id="js_cart_load" class="api-card">
+          <div class="signature-box">
+            <span class="badge js-func">JS FUNC</span>
+            <span>loadCartSidebar()</span>
+          </div>
+          <div class="description">
+            Wysyła żądanie <code>GET</code> do API, aby pobrać aktualny stan
+            koszyka. Czyści listę HTML w panelu bocznym i generuje ją na nowo na
+            podstawie otrzymanych danych JSON. Obsługuje wyświetlanie komunikatu
+            o pustym koszyku.
+          </div>
+        </div>
+
+        <h3
+          id="js_events"
+          style="border-bottom: 1px solid #eee; padding-bottom: 10px"
+        >
+          Obsługa Zdarzeń (Event Listeners)
+        </h3>
+        <p>Anonimowe funkcje przypisane do interakcji użytkownika.</p>
+
+        <div class="api-card">
+          <div class="signature-box">
+            <span class="badge event">EVENT</span>
+            <span>Kliknięcie w produkt (Open Modal)</span>
+          </div>
+          <div class="description">
+            Nasłuchuje kliknięć na kontenerze wyników (Event Delegation). Po
+            kliknięciu w kartę produktu:
+            <ul>
+              <li>
+                Pobiera dane produktu z atrybutów
+                <code>data-*</code> klikniętego elementu.
+              </li>
+              <li>Uzupełnia treść Modala (zdjęcie, opis, dostępna ilość).</li>
+              <li>Usuwa klasę <code>hidden</code>, aby wyświetlić okno.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="api-card">
+          <div class="signature-box">
+            <span class="badge event">EVENT</span>
+            <span>Przycisk "Dodaj do koszyka" (Modal)</span>
+          </div>
+          <div class="description">
+            Obsługuje przycisk wewnątrz modala.
+            <ol>
+              <li>Waliduje ilość (musi być > 0).</li>
+              <li>
+                Wysyła żądanie <code>POST /api/cart</code> z
+                <code>product_id</code> i <code>quantity</code>.
+              </li>
+              <li>
+                W przypadku błędu (np. brak towaru) wyświetla
+                <code>alert()</code>.
+              </li>
+              <li>
+                W przypadku sukcesu odświeża koszyk funkcją
+                <code>loadCartSidebar()</code>.
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="api-card">
+          <div class="signature-box">
+            <span class="badge event">EVENT</span>
+            <span>Usuwanie z koszyka (Przycisk X)</span>
+          </div>
+          <div class="description">
+            Wykorzystuje Event Delegation na liście koszyka. Po kliknięciu
+            przycisku usuwania: Wysyła żądanie
+            <code>DELETE /api/cart/{id}</code> i odświeża widok koszyka.
+          </div>
+        </div>
+
+        <div class="api-card">
+          <div class="signature-box">
+            <span class="badge event">EVENT</span>
+            <span>Przycisk "Złóż zamówienie"</span>
+          </div>
+          <div class="description">
+            Wysyła żądanie <code>POST /api/orders</code>. Obsługuje specyficzne
+            błędy biznesowe zwracane przez backend (np. "Cart is empty", "Not
+            enough stock"). Po sukcesie wyświetla komunikat i czyści widok
+            koszyka.
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
