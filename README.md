@@ -1,3 +1,5 @@
+<img width="1574" height="496" alt="image" src="https://github.com/user-attachments/assets/e0c933c9-7679-418c-9f0c-ddfb38918694" />
+
 Komendy które należy wysłać po kolei w powershell aby uruchomić projekt:
 
 git clone https://github.com/jamez7/onlineflowershop.git
