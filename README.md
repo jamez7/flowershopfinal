@@ -1,3 +1,5 @@
+Komendy które należy wysłać po kolei w powershell aby uruchomić projekt:
+
 git clone https://github.com/jamez7/onlineflowershop.git
 
 cd onlineflowershop
