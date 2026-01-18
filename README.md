@@ -2,9 +2,9 @@
 
 Komendy które należy wysłać po kolei w powershell aby uruchomić projekt:
 
-git clone https://github.com/jamez7/onlineflowershop.git
+git clone https://github.com/jamez7/flowershopfinal.git
 
-cd onlineflowershop
+cd flowershopfinal
 
 python -m venv venv
 
